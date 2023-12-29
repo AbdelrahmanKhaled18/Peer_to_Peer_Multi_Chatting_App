@@ -234,13 +234,11 @@ class ClientThread(threading.Thread):
                 elif message[0] == "chatroom-leave":
                     self.leave_chat_room()
 
-
-
             except OSError as oErr:
                 logging.error("OSError: {0}".format(oErr))
 
-            # function for resetting the timeout for the udp timer thread
 
+    # function for resetting the timeout for the udp timer thread
     def resetTimeout(self):
         self.udpServer.resetTimer()
 

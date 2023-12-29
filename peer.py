@@ -43,7 +43,7 @@ class PeerServer(threading.Thread):
     # main method of the peer server thread
     def run(self):
 
-        print("Peer server started...")
+        print(f"{Fore.GREEN}{Style.BRIGHT}Peer server started...{Fore.RESET}")
 
         # gets the ip address of this peer
         # first checks to get it for Windows devices
@@ -93,13 +93,13 @@ class PeerServer(threading.Thread):
                             print(message[1] + " has joined the chatroom.")
                             s.send("welcome".encode())
                         elif message[0] == "chatroom-leave":
-                            print(message[1] + " has left the chatroom.")
+                            print(f"{Fore.RED}{message[1]}" + f"{Fore.RED}has left the chatroom.{Fore.RESET}")
                             s.close()
                             self.connectedPeers.remove(s)
                         elif message[0] == "chat-message":
                             username = message[1]
                             content = "\n".join(message[2:])
-                            print(username + " -> " + content)
+                            print(username + " -> " + f"{Fore.LIGHTBLUE_EX}{content}{Fore.RESET}")
             # handles the exceptions, and logs them
             except OSError as oErr:
                 logging.error("OSError: {0}".format(oErr))
@@ -133,7 +133,6 @@ class PeerClient(threading.Thread):
 
         if peersToConnect is not None:
             for peer in peersToConnect:
-
                 peer_data = peer.split(":")
                 if len(peer_data) >= 2:
                     peerHost = peer_data[0]
@@ -148,8 +147,8 @@ class PeerClient(threading.Thread):
     # main method of the peer client thread
     def run(self):
         print("Peer client started...")
-        print('Chatroom joined Successfully. \nStart typing to send a message'
-              '. Send ":exit" to leave the chatroom.')
+        print(f'{Fore.RED}Chatroom joined Successfully. \nStart typing to send a message'
+              f'. Send ":exit" to leave the chatroom.{Fore.RESET}')
 
         while self.chatroom is not None:
             content = input()
@@ -286,11 +285,11 @@ class peerMain:
                         self.peerClient.join()
                 # Creating chat room
                 elif choice == "6":
-                    chat_name = input("Enter the Chat room name to Create ")
+                    chat_name = input(f"Enter the Chat room name to Create: {Fore.RED}")
                     self.Create_Chat_Room(chat_name)
                 # Joining Chat room
                 elif choice == "7":
-                    chat_name = input("Enter the Chat room name to Join ")
+                    chat_name = input(f"Enter the Chat room name to Join: {Fore.RED}")
                     self.Join_Chat_Room(chat_name)
                 # listing online users
                 elif choice == "8":
@@ -352,13 +351,13 @@ class peerMain:
         response = self.tcpClientSocket.recv(1024).decode()
         if response.startswith("create-success"):
             creator = response[len("create-success "):]  # Extract the creator's username
-            print(f"Chat room {chat_room_name} was created successfully by {creator}")
+            print(f"{Fore.GREEN}Chat room {chat_room_name} was created successfully by {creator}{Fore.RESET}")
             self.Join_Chat_Room(chat_room_name)
             self.peerClient = PeerClient(self.username, self.peerServer, chat_room_name)
             self.peerClient.start()
             self.peerClient.join()
         else:
-            print("There is already a chat room with that name.")
+            print(f"{Fore.RED}There is already a chat room with that name.{Fore.RESET}")
 
     def userList(self):
         message = "users-list-request" + " "
@@ -397,7 +396,6 @@ class peerMain:
         response = self.tcpClientSocket.recv(1024).decode()
         if response.startswith("join-chat-success"):
             participants_list = response.split()[1:]  # Extract the list of participants
-            print(response)
             if participants_list:
                 print("Joined " + chat_room_name + ". Participants: " + ", ".join(participants_list))
                 self.peerClient = PeerClient(self.username, self.peerServer, chat_room_name, participants_list)
