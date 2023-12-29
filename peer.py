@@ -137,7 +137,6 @@ class PeerClient(threading.Thread):
                 if len(peer_data) >= 2:
                     peerHost = peer_data[0]
                     peerPort = int(peer_data[1])
-                    print(peerHost + " -> " + str(peerPort))
                     sock = socket(AF_INET, SOCK_STREAM)
                     sock.connect((peerHost, peerPort))
                     message = "chatroom-join\n{}".format(self.username)
