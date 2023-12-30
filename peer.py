@@ -81,7 +81,6 @@ class PeerServer(threading.Thread):
                         self.connectedPeers.append(connected)
                         # if the user is not chatting, then the ip and the socket of
                         # this peer are assigned to server variables
-
                     # if the socket that receives the data is the one that
                     # is used to communicate with a connected peer, then enters here
                     else:
@@ -146,6 +145,7 @@ class PeerClient(threading.Thread):
     # main method of the peer client thread
     def run(self):
         print("Peer client started...")
+
         print(f'{Fore.RED}Chatroom joined Successfully. \nStart typing to send a message'
               f'. Send ":exit" to leave the chatroom.{Fore.RESET}')
 
@@ -245,7 +245,7 @@ class peerMain:
 
                 choice = input(f"{Fore.RESET}Choose: \nLogout: 3\nSearch: "
                                f"4\nStart a Chat: 5\nCreate Chat Room: 6\nJoin Chat: 7\n"
-                               f"List Users: 8 \nList Chat Rooms: 9 \n")
+                               f"List Users: 8\nList Chat Rooms: 9\n")
                 if choice == "3" and self.isOnline:
                     self.logout(1)
                     self.isOnline = False
@@ -367,7 +367,8 @@ class peerMain:
             print("Online Users:\n")
             if len(users) > 1:  # Check if there are users listed
                 for user in users[1:]:
-                    print(user + ",")
+                    print(f"{Fore.RED}{user}" + ",")
+                print(f"{Fore.RESET}\n")
             else:
                 print("\tNo users currently online")
         else:
@@ -383,7 +384,8 @@ class peerMain:
             for chat in chats:
                 chat_name = chat.strip()
                 if chat_name:  # Ensure the room name is not an empty string
-                    print(chat_name)
+                    print(f"{Fore.RED}{chat_name}{Fore.RESET}")
+            print("\n")
             if len(chats) < 1:  # Check if only the header or no rooms exist
                 print("\tNo rooms currently exist")
         else:

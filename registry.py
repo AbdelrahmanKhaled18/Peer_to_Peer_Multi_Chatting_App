@@ -237,7 +237,6 @@ class ClientThread(threading.Thread):
             except OSError as oErr:
                 logging.error("OSError: {0}".format(oErr))
 
-
     # function for resetting the timeout for the udp timer thread
     def resetTimeout(self):
         self.udpServer.resetTimer()
