@@ -92,7 +92,7 @@ class PeerServer(threading.Thread):
                             print(message[1] + " has joined the chatroom.")
                             s.send("welcome".encode())
                         elif message[0] == "chatroom-leave":
-                            print(f"{Fore.RED}{message[1]}" + f"{Fore.RED}has left the chatroom.{Fore.RESET}")
+                            print(f"{Fore.RED}{message[1]} " + f"{Fore.RED}has left the chatroom.{Fore.RESET}")
                             s.close()
                             self.connectedPeers.remove(s)
                         elif message[0] == "chat-message":
@@ -200,7 +200,6 @@ class peerMain:
         self.timer = None
         # available chat rooms
         self.chat_rooms = []
-
         self.username = username
 
         choice = "0"
@@ -352,9 +351,9 @@ class peerMain:
             creator = response[len("create-success "):]  # Extract the creator's username
             print(f"{Fore.GREEN}Chat room {chat_room_name} was created successfully by {creator}{Fore.RESET}")
             self.Join_Chat_Room(chat_room_name)
-            self.peerClient = PeerClient(self.username, self.peerServer, chat_room_name)
-            self.peerClient.start()
-            self.peerClient.join()
+            # self.peerClient = PeerClient(self.username, self.peerServer, chat_room_name)
+            # self.peerClient.start()
+            # self.peerClient.join()
         else:
             print(f"{Fore.RED}There is already a chat room with that name.{Fore.RESET}")
 
@@ -408,6 +407,7 @@ class peerMain:
                 self.peerClient = PeerClient(self.username, self.peerServer, chat_room_name)
                 self.peerClient.start()
                 self.peerClient.join()
+
             self.tcpClientSocket.send("chatroom-leave".encode())
         elif response == "No-Room found":
             print("No room found by the name: " + chat_room_name)
