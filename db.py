@@ -29,7 +29,18 @@ class DB:
     def is_account_online(self, username):
         return self.db.online_peers.count_documents({"username": username}) > 0
 
+    # logs in the user
+    def user_login(self, username, ip, port):
+        online_peer = {
+            "username": username,
+            "ip": ip,
+            "port": port
+        }
+        # self.db.online_peers.insert_one(online_peer)
 
+    # logs out the user
+    def user_logout(self, username):
+        self.db.online_peers.remove_one({"username": username})
 
     # retrieves the ip address and the port number of the username
     def get_peer_ip_port(self, username):

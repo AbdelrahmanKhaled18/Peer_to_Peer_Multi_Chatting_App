@@ -1,7 +1,6 @@
 from socket import *
 import threading
 import select
-import logging
 import db
 import bcrypt
 import colorama

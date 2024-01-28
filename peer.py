@@ -348,7 +348,6 @@ class peerMain:
                         self.peerClient.join()
                         self.peerClient = None
 
-
                 # Creating chat room
                 elif choice == "6":
                     chat_name = input(f"Enter the Chat room name to Create: {Fore.RED}")
