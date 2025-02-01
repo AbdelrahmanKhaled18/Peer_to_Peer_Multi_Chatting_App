@@ -58,11 +58,11 @@ The Peer-to-Peer Multi-Chatting App is a Python-based application leveraging soc
 
 4. **Run the Server**:
     ```sh
-    python registry.py
+    python server.py
     ```
 5. **Run the Client**:
     ```sh
-    python peer.py
+    python client.py
     ```
 
 ## Usage

@@ -3,7 +3,7 @@ from unittest.mock import patch, MagicMock
 from io import StringIO
 from contextlib import redirect_stdout
 from colorama import Fore
-from peer import peerMain
+from client import peerMain
 
 class TestPeerMain(unittest.TestCase):
     def setUp(self):
@@ -21,7 +21,7 @@ class TestPeerMain(unittest.TestCase):
             main.createAccount("testuser", "testpassword")
             output = mock_stdout.getvalue().strip()
             self.assertEqual(output, "Account created...")
-            
+
     @patch('builtins.input', side_effect=["192.168.1.106",'2', 'test_user', 'test_password', '1234'])
     @patch('sys.stdout', new_callable=StringIO)
     def test_login_success(self, mock_stdout, mock_input):

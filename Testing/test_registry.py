@@ -6,15 +6,15 @@ import socket
 import threading
 import time
 
-import peer
+import client
 # Import the functions and classes you want to test
-from registry import *
+from server import *
 
 
 class TestClientThread(unittest.TestCase):
     def setUp(self):
         self.mock_socket = Mock()
-        self.peer_instance = peer.peerMain()
+        self.peer_instance = client.peerMain()
         self.peer_instance.tcpClientSocket = MagicMock()
         self.peer_instance.registryName = 'testRegistry'
         self.peer_instance.registryPort = 15400
